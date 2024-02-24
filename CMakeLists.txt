@@ -12,4 +12,13 @@ if(OpenMP_CXX_FOUND)
     target_link_libraries(FastUnmult PUBLIC OpenMP::OpenMP_CXX)
 endif()
 
-# include STB image to your environment using include_directories
+
+
+#[[
+define external libraries' path by making file named "dependencies.cmake".
+variables you need to define : 
+set(STB_PATH PATH_TO_STB_IMAGE_FOLDER)
+]]
+
+include(dependencies.cmake)
+include_directories(${STB_PATH})
