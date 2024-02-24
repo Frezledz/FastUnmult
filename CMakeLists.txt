@@ -16,7 +16,7 @@ endif()
 
 #[[
 define external libraries' path by making file named "dependencies.cmake".
-variables you need to define : 
+variables you need to define(copy and paste, change values) : 
 set(STB_PATH PATH_TO_STB_IMAGE_FOLDER)
 ]]
 
