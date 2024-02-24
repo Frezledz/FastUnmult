@@ -34,21 +34,31 @@ int unmult(const char* filename,const char* output) {
 		cout << "Error allocating memory" << endl;
 		return 1;
 	}
-	cout << omp_get_max_threads() << endl;
-	auto mem = img;
-	for (int yy = 0; yy < height; yy++) {
-		for (int xx = 0; xx < width; xx++) {
-			float factor = 255.0 / max({ img[0], img[1], img[2] },cmp);
-			dst_img[PNG_CHANNELS_COUNT * (yy * width + xx) + 0] = img[0] * factor;
-			dst_img[PNG_CHANNELS_COUNT * (yy * width + xx) + 1] = img[1] * factor;
-			dst_img[PNG_CHANNELS_COUNT * (yy * width + xx) + 2] = img[2] * factor;
-			dst_img[PNG_CHANNELS_COUNT * (yy * width + xx) + 3] = 255.0 / factor;
-			//img = mem + channels * (yy * width + xx);
-			img+=channels;
+	cout << width << endl;
+	unsigned char* mem = img;
+	//#pragma omp parallel
+	{
+		int thread_id = omp_get_thread_num();
+		int thread_count = omp_get_num_threads();
+		int chunk_size = height / thread_count;
+		int start = thread_id * chunk_size;
+		int end = ((thread_id + 1) == thread_count) ? height : (thread_id + 1) * chunk_size;
+		for (int yy = start; yy < end; yy++) {
+			for (int xx = 0; xx < width; xx++) {
+				float factor = 255.0 / max({ img[0], img[1], img[2] }, cmp);
+				dst_img[PNG_CHANNELS_COUNT * (yy * width + xx) + 0] = img[0] * factor;
+				dst_img[PNG_CHANNELS_COUNT * (yy * width + xx) + 1] = img[1] * factor;
+				dst_img[PNG_CHANNELS_COUNT * (yy * width + xx) + 2] = img[2] * factor;
+				dst_img[PNG_CHANNELS_COUNT * (yy * width + xx) + 3] = 255.0 / factor;
+				img = mem + channels * (yy * width + xx + 1);
+				//img += channels;
+			}
 		}
+
 	}
 	stbi_write_png(output, width, height, PNG_CHANNELS_COUNT, dst_img, width * PNG_CHANNELS_COUNT);
 	free(dst_img);
+	system(output);
 	return 0;
 
 }
