@@ -5,7 +5,8 @@
 #include "stb_image_write.h"
 #define PNG_CHANNELS_COUNT 4
 #include "omp.h"
-//#include <time.h>
+#include <fstream>
+#include <string>
 
 
 using namespace std;
@@ -24,20 +25,52 @@ int main(int argc, char* argv[])
 		cout << "input file name" << endl;
 		cout << "output file name" << endl << endl;
 		cout << "and here is a example :" << endl;
-		cout << "UnmultApp.exe 0 image.jpg transparent.png" << endl << endl;
-		cout << "Go to https://github.com/xxXFreezerXxx for more information." << endl;
+		cout << "UnmultApp.exe 0 image.jpg transparent" << endl << endl;
+		cout << "UnmultApp.exe 1 video.mp4 trans" << endl << endl;
+		cout << "Go to https://github.com/xxXFreezerXxx for more idnformation." << endl;
 		return 0;
 
 	}
 	if (argc == 4) {
 		const char* filename = argv[2];
-		if (argv[1] == "0") {
-			const char* output = argv[3];
+		const char* output = argv[3];
+		if (((string)"0" == (string)argv[1])) {
 			int res = unmult(filename, output);
 			return res;
 		}
-		if (argv[1] == "1") {
-			cout << "Sorry, video conversion feature is still in development." << endl;
+		if (((string)"1" == (string)argv[1])) {
+			string ffmpeg_command = "ffmpeg -i \"" + (string)filename+"\" \"tmp%01d.png\"";
+			system(ffmpeg_command.c_str());
+			ifstream checker_file;
+			checker_file.open("tmp1.png");
+			if (!checker_file) {
+				cout << "FFmpeg conversion failed. Make sure you have installed ffmpeg to your computer." << endl;
+				return 1;
+			}
+			int i = 0;
+			while (true)
+			{
+				i++;
+				ifstream ffmpeg_file;
+				char ffmpeg_file_name[256];
+				sprintf_s(ffmpeg_file_name,"tmp%d.png",i);
+				ffmpeg_file.open(ffmpeg_file_name);
+				if (ffmpeg_file) {
+					string output_file_name =(string)output + to_string(i);
+					int res = unmult(ffmpeg_file_name, output_file_name.c_str());
+				}
+				else {
+					cout <<endl<< "Conversion done, now deleting tmp file..." << endl;
+					break;
+				}
+			}
+			for (int ii = 1; ii < i; ii++) {
+				char ffmpeg_file_name[256];
+				sprintf_s(ffmpeg_file_name, "tmp%d.png", ii);
+				remove(ffmpeg_file_name);
+				
+			}
+			cout << "Done." << endl;
 			return 0;
 			
 		}
@@ -58,7 +91,7 @@ int unmult(const char* filename,const char* output) {
 	int width, height, channels;
 	unsigned char* img = stbi_load(filename, &width, &height, &channels, 3);
 	if (img == NULL) {
-		cout << "Error loading a image, file may not exist." << endl;
+		cout << "Error loading an image, file may not exist." << endl;
 		return 1;
 	}
 	//add unmult process
@@ -69,7 +102,7 @@ int unmult(const char* filename,const char* output) {
 		return 1;
 	}
 	unsigned char* mem = img;
-	cout << "Converting " << filename << endl;
+	cout<<"\r" << "Applying effect to " << filename << flush;
 	#pragma omp parallel private(img)
 	{
 		//split chunks to each processor manually to avoid any errors
@@ -90,16 +123,9 @@ int unmult(const char* filename,const char* output) {
 		}
 
 	}
-	/*clock_t end = clock();
-	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	begin = clock();
-	cout <<"Conversion done in "<< time_spent<<" seconds" << endl;*/
-	cout << "Saving file..." << endl;
-	stbi_write_png(output, width, height, PNG_CHANNELS_COUNT, dst_img, width * PNG_CHANNELS_COUNT);
-	cout << "File saved as " << output << endl;
-	/*end = clock();
-	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	cout << "File saved as " << output << ", time took: " << time_spent << " seconds" <<endl;*/
+	string output_file_name = (string)output + ".png";
+	stbi_write_png(output_file_name.c_str(), width, height, PNG_CHANNELS_COUNT, dst_img, width * PNG_CHANNELS_COUNT);
+//	cout << "File saved as " << output << endl;
 	free(dst_img);
 	return 0;
 
