@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 		cout << "and here is a example :" << endl;
 		cout << "UnmultApp.exe 0 image.jpg transparent" << endl << endl;
 		cout << "UnmultApp.exe 1 video.mp4 trans" << endl << endl;
-		cout << "Go to https://github.com/xxXFreezerXxx for more idnformation." << endl;
+		cout << "Go to https://github.com/Frezledz for more idnformation." << endl;
 		return 0;
 
 	}
