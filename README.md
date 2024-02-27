@@ -1,6 +1,6 @@
 # Better Unmult App
-Lighter and cross-platform(maybe) version of [Old bad Umult App](https://github.com/xxXFreezerXxx/UnmultApp). Download binary from [releases](https://github.com/xxXFreezerXxx/FastUnmult/releases).  
+Lighter and cross-platform(maybe) version of [Old bad Umult App](https://github.com/Frezledz/UnmultApp). Download binary from [releases](https://github.com/Frezledz/FastUnmult/releases).  
 Run the application in terminal for help. If you are curious, I am NOT plaaning to make this GUI app.  
 Still in development, not completed.  
-‚¿‚á‚ñ‚Æ“®‚­AŒy—Ê‚©‚ÂƒNƒƒXƒvƒ‰ƒbƒgƒtƒH[ƒ€(‚É‚È‚é—\’è)‚Ì[Umult App](https://github.com/xxXFreezerXxx/UnmultApp)‚Å‚·B[Releases](https://github.com/xxXFreezerXxx/FastUnmult/releases)‚©‚çƒ_ƒEƒ“ƒ[ƒh‚µ‚Ä‚­‚¾‚³‚¢B  
-ƒwƒ‹ƒv‚Íƒ^[ƒ~ƒiƒ‹‚ÅÀs‚µ‚ÄQÆ‚µ‚Ä‚­‚¾‚³‚¢B‚¿‚È‚İ‚ÉGUI‚ğÀ‘•‚·‚é—\’è‚Í‚ ‚è‚Ü‚¹‚ñB  
+ã¡ã‚ƒã‚“ã¨å‹•ãã€è»½é‡ã‹ã¤ã‚¯ãƒ­ã‚¹ãƒ—ãƒ©ãƒƒãƒˆãƒ•ã‚©ãƒ¼ãƒ (ã«ãªã‚‹äºˆå®š)ã®[Umult App](https://github.com/Frezledz/UnmultApp)ã§ã™ã€‚[Releases](https://github.com/Frezledz/FastUnmult/releases)ã‹ã‚‰ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¦ãã ã•ã„ã€‚  
+ãƒ˜ãƒ«ãƒ—ã¯ã‚¿ãƒ¼ãƒŸãƒŠãƒ«ã§å®Ÿè¡Œã—ã¦å‚ç…§ã—ã¦ãã ã•ã„ã€‚ã¡ãªã¿ã«GUIã‚’å®Ÿè£…ã™ã‚‹äºˆå®šã¯ã‚ã‚Šã¾ã›ã‚“ã€‚  
